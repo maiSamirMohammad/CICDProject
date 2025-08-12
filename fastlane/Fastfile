@@ -1,0 +1,61 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    print "Fastlane running successfully"
+    end
+
+  desc "Prepare Android Debug Build"
+  lane :build_debug_android do
+    gradle(
+        task: "assembleDebug"
+    )
+  end
+
+  desc "Prepare Android Release Build"
+    lane :build_release_android do
+      gradle(
+          task: "assembleRelease"
+      )
+    end
+
+def read_property(file, key)
+  return nil unless File.exist?(file)
+  File.foreach(file) do |line|
+    k, v = line.strip.split("=")
+    return v if k == key
+  end
+  nil
+end
+    desc "Prepare Android Build & distribute to Firebase App Distribution"
+    lane :beta_android do
+      build_release_android
+      firebase_token = read_property("firebase.properties", "firebase_cli_token")
+        unless firebase_token
+          UI.user_error!("Firebase CLI token not found in firebase.properties")
+        end
+      firebase_app_distribution(
+      app: "1:39360389017:android:6ba3ab33888b72b628bd08",
+      firebase_cli_token: firebase_token,
+        groups: "testers",
+            release_notes: "Please check the new dependencies in this release developer:Mai."
+      )
+    end
+
+end
