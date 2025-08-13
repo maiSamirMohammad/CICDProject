@@ -1,0 +1,10 @@
+version: 2.1
+jobs:
+  try-job:
+    steps:
+      - run: echo "I'm a job named try-job within a workflow named try-workflow."
+
+workflows:
+  try-workflow:
+    jobs:
+      - try-job
