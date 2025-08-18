@@ -1,12 +1,13 @@
 version: 2.1
 jobs:
-  try-job:
-    macos:
-      xcode: 14.0.1
+  beta-job:
+    docker:
+      - image: cimg/android:2025.08
     steps:
-      - run: echo "I'm a job named try-job within a workflow named try-workflow."
+      - checkout
+      - run: bash scripts/prepare.sh && bash scripts/deploy.sh
 
 workflows:
-  try-workflow:
+  beta-workflow:
     jobs:
-      - try-job
+      - beta-job
