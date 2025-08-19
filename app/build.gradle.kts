@@ -10,7 +10,7 @@ val keyPassword: String? = System.getenv("keyPassword")
 android {
     signingConfigs {
         create("release") {
-            storeFile?.let { this.storeFile = file(it) }
+            storeFile?.let { this.storeFile = file("cicd-project-release-key.jks") }
             storePassword?.let { this.storePassword = it }
             keyAlias?.let { this.keyAlias = it }
             keyPassword?.let { this.keyPassword = it }
