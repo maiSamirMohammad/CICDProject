@@ -5,7 +5,14 @@ jobs:
       - image: cimg/android:2025.08
     steps:
       - checkout
-      - run: bash scripts/prepare.sh && bash scripts/deploy.sh
+      - run:
+            name: Install Bundler locally
+            command: |
+              gem install bundler
+              bundle config set --local path 'vendor/bundle'
+              bundle install
+
+      - run: bash scripts/prepare.sh && bash scripts/beta.sh
 
 workflows:
   beta-workflow:
