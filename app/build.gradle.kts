@@ -3,17 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
-val storeFile: String? = System.getenv("storeFile")
-val storePassword: String? = System.getenv("storePassword")
-val keyAlias: String? = System.getenv("keyAlias")
-val keyPassword: String? = System.getenv("keyPassword")
 android {
     signingConfigs {
         create("release") {
-            storeFile?.let { this.storeFile = file(it) }
-            storePassword?.let { this.storePassword = it }
-            keyAlias?.let { this.keyAlias = it }
-            keyPassword?.let { this.keyPassword = it }
+            storeFile = file("app/cicd-project-release-key.jks")
+            storePassword = System.getenv("RELEASE_STORE_PASSWORD")
+            keyAlias = System.getenv("RELEASE_KEY_ALIAS")
+            keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
         }
     }
 

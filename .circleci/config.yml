@@ -13,6 +13,13 @@ jobs:
               bundle install
 
       - run: bash scripts/prepare.sh && bash scripts/beta.sh
+      - run:
+          name: Check keystore exists
+          command: |
+            ls -l app/
+            echo $RELEASE_STORE_FILE_BASE64 | base64 --decode > app/cicd-project-release-key.jks
+            ls -l app/
+
 
 workflows:
   beta-workflow:
