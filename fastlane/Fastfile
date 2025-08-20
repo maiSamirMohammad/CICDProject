@@ -35,24 +35,12 @@ platform :android do
       )
     end
 
-def read_property(file, key)
-  return nil unless File.exist?(file)
-  File.foreach(file) do |line|
-    k, v = line.strip.split("=")
-    return v if k == key
-  end
-  nil
-end
     desc "Prepare Android Build & distribute to Firebase App Distribution"
     lane :beta_android do
       build_release_android
-      firebase_token = read_property("firebase.properties", "firebase_cli_token")
-        unless firebase_token
-          UI.user_error!("Firebase CLI token not found in firebase.properties")
-        end
       firebase_app_distribution(
       app: "1:39360389017:android:6ba3ab33888b72b628bd08",
-      firebase_cli_token: firebase_token,
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
         groups: "testers",
             release_notes: "Please check the new dependencies in this release developer:Mai."
       )
