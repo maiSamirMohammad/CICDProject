@@ -1,4 +1,4 @@
-echo $KEYSTORE_BASE64 | base64 -d > app/cicd-project-release-key.jks
+echo $KEYSTORE_BASE64 | base64 -d > cicd-project-release-key.jks
 chmod 600 app/cicd-project-release-key.jks
 ./gradlew clean
 bundle install
