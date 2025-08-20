@@ -7,9 +7,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = rootProject.file("cicd-project-release-key.jks")
-            storePassword = System.getenv("RELEASE_STORE_PASSWORD")
-            keyAlias = System.getenv("RELEASE_KEY_ALIAS")
-            keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+            storePassword = System.getenv("storePassword")
+            keyAlias = System.getenv("keyAlias")
+            keyPassword = System.getenv("keyPassword")
         }
     }
 
