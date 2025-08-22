@@ -6,7 +6,10 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = rootProject.file("cicd-project-release-key.jks")
+            val storeFilePath = System.getenv("storeFile")
+            if (storeFilePath != null) {
+                storeFile = rootProject.file(storeFilePath)
+            }
             storePassword = System.getenv("storePassword")
             keyAlias = System.getenv("keyAlias")
             keyPassword = System.getenv("keyPassword")

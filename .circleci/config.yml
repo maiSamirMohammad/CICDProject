@@ -5,19 +5,7 @@ jobs:
       - image: cimg/android:2025.08
     steps:
       - checkout
-      - run:
-            name: Install Bundler locally
-            command: |
-              gem install bundler
-              bundle config set --local path 'vendor/bundle'
-              bundle install
-
       - run: bash scripts/prepare.sh && bash scripts/beta.sh
-      - run:
-          name: Check keystore exists
-          command: |
-            ls -l app/
-
 
 workflows:
   beta-workflow:

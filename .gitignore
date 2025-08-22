@@ -15,5 +15,4 @@
 local.properties
 keystore.properties
 firebase.properties
-
 app/*.jks*
